@@ -1,1 +1,5 @@
 terraform 1.5.5
+kubectl 1.28.0
+helmfile 0.156.0
+helm 3.12.3
+jq 1.6
