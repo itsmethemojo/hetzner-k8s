@@ -9,5 +9,5 @@ terraform {
 
 provider "hcloud" {
   # Configuration options
-  token = var.token
+  token = var.hcloud_token
 }
