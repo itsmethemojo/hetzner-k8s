@@ -103,6 +103,26 @@ resource "hcloud_firewall" "myfirewall" {
   rule {
     direction = "out"
     protocol  = "tcp"
+    port      = "30080"
+    destination_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+  }
+
+  rule {
+    direction = "out"
+    protocol  = "tcp"
+    port      = "30443"
+    destination_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+  }
+
+  rule {
+    direction = "out"
+    protocol  = "tcp"
     port      = "6443"
     destination_ips = [
       "0.0.0.0/0",
@@ -142,6 +162,8 @@ resource "hcloud_server" "master_nodes" {
     K3S_NODE_NAME = "master-node${count.index}"
     K3S_TOKEN     = var.k3s_init_token
     IP_FILTER     = "10.0"
+    HCLOUD_TOKEN  = var.hcloud_token
+    SERVER_NAME   = "master-node${count.index}"
   })
 
   labels = {
@@ -176,6 +198,8 @@ resource "hcloud_server" "worker_nodes" {
     K3S_TOKEN     = var.k3s_init_token
     MASTER_IP     = local.master_node_private_ips[0]
     IP_FILTER     = "10.0"
+    HCLOUD_TOKEN  = var.hcloud_token
+    SERVER_NAME   = "worker-node${count.index}"
   })
 
   labels = {
